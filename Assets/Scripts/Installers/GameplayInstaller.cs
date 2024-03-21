@@ -15,6 +15,7 @@ public class GameplayInstaller : MonoInstaller
     {
         var ship = Container.InstantiatePrefab(_ship);
         Player = Container.InstantiateComponent<Player>(ship);
+        Player.name = "Player";
         Player.Init();
         Container.Bind<Player>().FromInstance(Player);
     }

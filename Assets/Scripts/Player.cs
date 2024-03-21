@@ -16,17 +16,23 @@ public class Player : MonoBehaviour
         _input = input;
 
         _input.OnMovementAction += SetDirection;
+        _input.OnAttackAction += Attack;
     }
     public void Init()
     {
         Ship = GetComponent<Ship>();
-        Ship.Init();
     }
     private void OnDisable()
     {
         _input.OnMovementAction -= SetDirection;
+        _input.OnAttackAction -= Attack;
     }
     private void SetDirection(Vector2 direction) => _inputDirection = direction;
+
+    private void Attack()
+    {
+        Ship.Attack();
+    }
     private void FixedUpdate()
     {
         Ship.Swim(_inputDirection);

@@ -13,7 +13,10 @@ namespace Entities.Ships
         }
         public override void Attack()
         {
-            Debug.Log(GetType() + " " + "Attack");
+            for(var i=0;i<cannons.Length;i++)
+            {
+                cannons[i].Shoot();
+            }
         }
 
         public override void Swim(Vector2 direction)
