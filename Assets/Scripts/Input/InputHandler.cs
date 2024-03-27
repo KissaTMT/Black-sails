@@ -4,6 +4,7 @@ using UnityEngine;
 public class InputHandler : IDisposable, IInput
 {
     public event Action<Vector2> OnMovementAction;
+    public event Action<Vector2> OnAimingAction;
     public event Action OnAttackAction;
     public event Action<bool> OnContiniousAttackAction;
 
@@ -21,6 +22,8 @@ public class InputHandler : IDisposable, IInput
 
         _inputs.Gameplay.Attack.performed += attack => OnContiniousAttackAction?.Invoke(true);
         _inputs.Gameplay.Attack.canceled += attack => OnContiniousAttackAction?.Invoke(false);
+
+        _inputs.Gameplay.Attack.performed += aim => OnAimingAction?.Invoke(aim.ReadValue<Vector2>());
     }
     public void Dispose()
     {
@@ -33,5 +36,6 @@ public class InputHandler : IDisposable, IInput
         _inputs.Gameplay.Attack.performed -= attack => OnContiniousAttackAction?.Invoke(true);
         _inputs.Gameplay.Attack.canceled -= attack => OnContiniousAttackAction?.Invoke(false);
 
+        _inputs.Gameplay.Attack.performed -= aim => OnAimingAction?.Invoke(aim.ReadValue<Vector2>());
     }
 }

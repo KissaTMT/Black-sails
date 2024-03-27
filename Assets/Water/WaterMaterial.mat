@@ -105,7 +105,7 @@ Material:
     - _SpecularSpeed: 0.3
     - _SpecularThreshold: -0.84
     m_Colors:
-    - _CausticColour: {r: 0.45490196, g: 0.77254903, b: 0.7647059, a: 0.1254902}
+    - _CausticColour: {r: 0.45490196, g: 0.77254903, b: 0.7647059, a: 0.101960786}
     - _CausticHighlightColour: {r: 1, g: 1, b: 1, a: 0.36862746}
     - _CurrentWorldTexturePos: {r: 0, g: 0, b: 0, a: 0}
     - _FoamColour: {r: 1, g: 1, b: 1, a: 1}
