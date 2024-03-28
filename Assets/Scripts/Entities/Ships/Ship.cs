@@ -38,9 +38,6 @@ namespace Entities.Ships
         public abstract void Swim(Vector2 direction);
         public abstract void Attack();
 
-        private void Awake()
-        {
-            Init();
-        }
+        private void Awake() => Init();
     }
 }

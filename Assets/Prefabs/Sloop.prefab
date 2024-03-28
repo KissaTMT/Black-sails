@@ -5350,6 +5350,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 344075283266314735}
     m_Modifications:
+    - target: {fileID: 1182184271013048652, guid: c235ef606e159324194892f36cbe78a3, type: 3}
+      propertyPath: _decreaseModifier
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5473566383503881892, guid: c235ef606e159324194892f36cbe78a3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5473566384079320792, guid: c235ef606e159324194892f36cbe78a3, type: 3}
       propertyPath: m_Name
       value: sail root

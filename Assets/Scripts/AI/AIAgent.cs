@@ -26,8 +26,9 @@ public class AIAgent : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Ship.Swim((_targets[0].transform.position - Ship.Transform.position).normalized);
+        Ship.Swim(GetDirectionToTarget(_targets[0].transform.position));
     }
+    private Vector2 GetDirectionToTarget(Vector3 position) => new Vector2(Vector2.SignedAngle(position - Ship.Transform.position, Ship.Transform.up), 1);
     private IEnumerator SearchTargetsRoutine()
     {
         var delay = new WaitForSeconds(1);

@@ -29,8 +29,22 @@ public class WorldController : MonoBehaviour
 
         _worldSize = new Vector2Int((_ground.size.x / 16 + 4) * 16, (_ground.size.y / 16 + 4) * 16);
 
-        StartCoroutine(GenerateWaterRotine());
+        GenerateWater();
         StartCoroutine(GenerateCoastRoutine());
+    }
+    private void GenerateWater()
+    {
+        var sizeX = _worldSize.x;
+        var sizeY = _worldSize.y;
+
+        for (var x = -sizeX / 2; x < sizeX / 2; x += 16)
+        {
+            for (var y = -sizeY / 2; y < sizeY / 2; y += 16)
+            {
+                _waterController.Load(new Vector2Int(x, y));
+            }
+        }
+        ScreenFader.instance.Unfade();//super bad practice
     }
     private IEnumerator GenerateCoastRoutine()
     {
@@ -53,9 +67,11 @@ public class WorldController : MonoBehaviour
         {
             for (var y = -sizeY / 2; y < sizeY / 2; y+=16)
             {
-                yield return null;
                 _waterController.Load(new Vector2Int(x, y));
+                yield return null;
+                yield return null;
             }
         }
+        
     }
 }
