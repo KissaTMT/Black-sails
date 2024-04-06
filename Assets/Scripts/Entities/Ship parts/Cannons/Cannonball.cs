@@ -24,6 +24,10 @@ public class Cannonball : MonoBehaviour, IPoolable
         _transform = GetComponent<Transform>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
+    private void OnEnable()
+    {
+        StartCoroutine(DeactiveRoutine());
+    }
     private void OnDisable()
     {
         OnRelease?.Invoke();
@@ -42,6 +46,11 @@ public class Cannonball : MonoBehaviour, IPoolable
         var target = transform.position + (Vector3)_direction;
         transform.position = Vector2.MoveTowards(transform.position, target, _flightSpeed * 10 * Time.deltaTime);
         if (Vector2.Distance(transform.position, target) < float.Epsilon) gameObject.SetActive(false);
+    }
+    private IEnumerator DeactiveRoutine()
+    {
+        yield return new WaitForSeconds(1);
+        gameObject.SetActive(false);
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {

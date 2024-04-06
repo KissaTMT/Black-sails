@@ -22,7 +22,6 @@ public class ScreenFader : MonoBehaviour
     private void Awake()
     {
         SingletonInit();
-
         _animator = GetComponent<Animator>();
     }
     private void SingletonInit()

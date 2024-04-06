@@ -92,7 +92,7 @@ Material:
     - _CausticFaderMultiplier: 0.05
     - _CausticFaderScale: 0.17
     - _CausticMovementAmount: 0.032
-    - _CausticMovementScale: 1.63
+    - _CausticMovementScale: 1.5
     - _CausticScale: 0.06
     - _CausticSpeed: 0.8
     - _CausticSquashAmount: 1.25
@@ -105,12 +105,12 @@ Material:
     - _SpecularSpeed: 0.3
     - _SpecularThreshold: -0.84
     m_Colors:
-    - _CausticColour: {r: 0.45490196, g: 0.77254903, b: 0.7647059, a: 0.101960786}
+    - _CausticColour: {r: 0.52475965, g: 0.8773585, b: 0.8688961, a: 0.101960786}
     - _CausticHighlightColour: {r: 1, g: 1, b: 1, a: 0.36862746}
     - _CurrentWorldTexturePos: {r: 0, g: 0, b: 0, a: 0}
     - _FoamColour: {r: 1, g: 1, b: 1, a: 1}
     - _FoamTexelSize: {r: 0.005, g: 0.005, b: 0, a: 0}
-    - _MainColour: {r: 0.22353148, g: 0.5547758, b: 0.6509434, a: 1}
+    - _MainColour: {r: 0.22352941, g: 0.567, b: 0.6509804, a: 1}
     - _Player: {r: 0, g: 0, b: 0, a: 0}
     - _PlayerPosition: {r: 0, g: 0, b: 0, a: 0}
     - _SpecularColour: {r: 1, g: 1, b: 1, a: 0.78431374}

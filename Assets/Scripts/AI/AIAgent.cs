@@ -5,12 +5,17 @@ using UnityEngine;
 
 public class AIAgent : MonoBehaviour
 {
+    private const int RODAR_RADIUS = 40;
+    private const float RODAR_DELAY = 2;
     public Ship Ship { get; private set; }
-    private List<Transform> _targets;
+
+    private Rodar _rodar;
+    private int _target;
+
     public void Init()
     {
         Ship = GetComponent<Ship>();
-        _targets = new List<Transform>();   
+        _rodar = new Rodar(this, RODAR_RADIUS, RODAR_DELAY);
     }
     private void Attack()
     {
@@ -22,30 +27,26 @@ public class AIAgent : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(SearchTargetsRoutine());
+        _rodar.Start();
+        _target = Random.Range(0, _rodar.Targets.Count);
     }
     private void FixedUpdate()
     {
-        Ship.Swim(GetDirectionToTarget(_targets[0].transform.position));
+        var position = _rodar.Targets[_target].transform.position;
+        Vector2 direction;
+        if (Vector2.Distance(position, Ship.Transform.position) > Ship.CannonsRange) direction = GetDirectionToTarget(position);
+        else direction = GetDirectionToTarget(GetPointToCannonFire(position));
+        Ship.Swim(direction);
+        if (Vector2.Distance(Ship.Transform.position, position) <= Ship.CannonsRange) Attack();
     }
     private Vector2 GetDirectionToTarget(Vector3 position) => new Vector2(Vector2.SignedAngle(position - Ship.Transform.position, Ship.Transform.up), 1);
-    private IEnumerator SearchTargetsRoutine()
+
+    private Vector2 GetPointToCannonFire(Vector3 position)
     {
-        var delay = new WaitForSeconds(1);
-        var targetColliders = new Collider2D[4];
-        while (true)
-        {
-            var count = Physics2D.OverlapCircleNonAlloc(Ship.Transform.position, 40, targetColliders);
-            if (count > 0)
-            {
-                for (var i = 0; i < count; i++)
-                {
-                    var target = targetColliders[i];
-                    if (target.transform.Equals(Ship.Transform) || _targets.Contains(target.transform)) continue;
-                    _targets.Add(target.transform);
-                }
-            }
-            yield return delay;
-        }
+        var delta = position - Ship.Transform.position;
+
+        (float left, float right) angle = (Vector2.SignedAngle(delta, -Ship.Transform.right), Vector2.SignedAngle(delta, Ship.Transform.right));
+
+        return 2 * delta - delta.normalized * Ship.CannonsRange;
     }
 }

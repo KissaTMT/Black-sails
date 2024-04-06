@@ -5,6 +5,7 @@ namespace Entities.Ships
     public abstract class Ship : MonoBehaviour
     {
         public Transform Transform => transform;
+        public float CannonsRange => cannons[0].Range;
 
         protected Cannon[] cannons;
         protected Sail[] sails;
