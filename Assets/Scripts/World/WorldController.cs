@@ -13,11 +13,11 @@ public class WorldController : MonoBehaviour
     [SerializeField] private TileBase _waterTile;
     [SerializeField] private TileBase _coastWaterTile;
     [SerializeField] private TileBase _coastTile;
-
     private IReadOnlyDictionary<Vector2Int,CellType> _cells;
 
     private CellGenerator _cellGenerator;
     private WaterController _waterController;
+    
 
     private Vector2Int _worldSize;
     private void Awake()
