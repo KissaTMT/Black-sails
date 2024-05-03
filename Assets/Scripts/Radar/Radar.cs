@@ -46,12 +46,12 @@ public class Radar : IDisposable
         return _targets;
     }
     public void Dispose() => Stop();
-    public bool TryGetIntersection(Vector2 start, Vector2 end, (Vector2 min, Vector2 max) offsets, out Vector2 result)
+    public bool TryGetIntersection(Vector2 start, Vector2 end, Bounds bounds, out Vector2 result)
     {
-        var topRight = new Vector2(offsets.max.x, offsets.max.y);
-        var topLeft = new Vector2(offsets.min.x, offsets.max.y);
-        var bottomRight = new Vector2(offsets.max.x, offsets.min.y);
-        var bottomLeft = new Vector2(offsets.min.x, offsets.min.y);
+        var topRight = bounds.TopRight;
+        var topLeft = bounds.TopLeft;
+        var bottomRight = bounds.BottomRight;
+        var bottomLeft = bounds.BottomLeft;
 
         var hasIntersection = false;
         var intersection = Vector2.positiveInfinity;
@@ -68,16 +68,13 @@ public class Radar : IDisposable
         if (IsIntersectSegment(start, end, topRight, topLeft)) AddIntersectPoint(start, end, topRight, topLeft);
         if (IsIntersectSegment(start, end, bottomRight, bottomLeft)) AddIntersectPoint(start, end, bottomRight, bottomLeft);
 
-        if (hasIntersection)
-        {
-            result = intersection;
-            return true;
-        }
-        else
-        {
-            result = Vector2.positiveInfinity;
-            return false;
-        }
+        result = intersection;
+
+        return hasIntersection;
+    }
+    public bool IsIntersectSegmentProjections(Vector2 a, Vector2 b, Vector2 c, Vector2 d)
+    {
+        return IsIntersectProjections(a.x, b.x, c.x, d.x) && IsIntersectProjections(a.y, b.y, c.y, d.y);
     }
     private IEnumerator SearchRoutine()
     {
@@ -105,10 +102,6 @@ public class Radar : IDisposable
         }
         return Mathf.Max(min1, min2) <= Mathf.Min(max1, max2);
     }
-    private bool IsIntersectSegmentProjections(Vector2 a, Vector2 b, Vector2 c, Vector2 d)
-    {
-        return IsIntersectProjections(a.x, b.x, c.x, d.x) && IsIntersectProjections(a.y, b.y, c.y, d.y);
-    }
     private Vector2 CalculateIntersectPoint(Vector2 a, Vector2 b, Vector2 c, Vector2 d, out Vector2 result)
     {
         return result = a + (b - a) * ((Vector3.Cross(d - c, c).z + Vector3.Cross(a, d - c).z) / Vector3.Cross(d - c, b - a).z);
@@ -126,9 +119,9 @@ public class Radar : IDisposable
         var cb = b - c;
 
         var cross_abac = Vector3.Cross(ab, ac).z;
-        var cross_abad = Vector3.Cross(ac, ad).z;
+        var cross_abad = Vector3.Cross(ab, ad).z;
         var cross_cdca = Vector3.Cross(cd, ca).z;
-        var cross_cdcb = Vector3.Cross(cb, cb).z;
+        var cross_cdcb = Vector3.Cross(cd, cb).z;
 
         return (cross_abac <= 0 && cross_abad >= 0 || cross_abac >= 0 && cross_abad <= 0) && (cross_cdca <= 0 && cross_cdcb >= 0 || cross_cdca >= 0 && cross_cdcb <= 0);
     }

@@ -1,5 +1,6 @@
 using Entities.Ships;
 using UnityEngine;
+using UnityEngine.AI;
 using Zenject;
 
 public class Player : MonoBehaviour
@@ -9,7 +10,6 @@ public class Player : MonoBehaviour
     private IInput _input;
 
     private Vector2 _inputDirection;
-
     [Inject]
     public void Construct(IInput input)
     {

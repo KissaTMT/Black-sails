@@ -22,7 +22,7 @@ public class PhysicsSwimController : ISwimController
     {
         _direction = direction;
 
-        if (_direction.x != 0 && _currentSpeed > 0.25f) Turn();
+        if (_direction.x != 0) Turn();
         if (_direction.y != 0) _currentSpeed = _direction.y > 0 ? Overclocking() : Bracking();
 
         _rigidbody.velocity = _transform.up * _currentSpeed;
@@ -38,6 +38,6 @@ public class PhysicsSwimController : ISwimController
     private void Turn()
     {
         var angle = Mathf.Sign(_direction.x) * Mathf.Rad2Deg;
-        _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _rigidbody.rotation - angle, _swimStats.RotationSpeed * _currentSpeed * Time.deltaTime);
+        _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _rigidbody.rotation - angle, _swimStats.RotationSpeed * (_swimStats.MaxSpeed - _currentSpeed / 2) * Time.deltaTime);
     }
 }
